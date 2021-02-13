@@ -14,16 +14,6 @@ const CREATE_PODCAST_MUTATION = gql`
 `
 
 export const CreatePodcast = () => {
-  //   const { create } = useForm({
-  //     reValidateMode: "onChange",
-  //     defaultValues: {},
-  //     resolver: undefined,
-  //     context: undefined,
-  //     criteriaMode: "firstError",
-  //     shouldFocusError: true,
-  //     shouldUnregister: true,
-  //   })
-
   const [addPodcast, { data }] = useMutation(CREATE_PODCAST_MUTATION)
 
   const handleSubmit = (e: any) => {

@@ -12,7 +12,5 @@ export interface PodcastParts {
   id: number;
   title: string;
   category: string;
-  thumbnailUrl: string | null;
-  description: string | null;
-  rating: number;
+  rating: number | null;
 }

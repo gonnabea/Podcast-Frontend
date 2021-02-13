@@ -7,14 +7,21 @@
 // GraphQL query operation: getAllPodcastQuery
 // ====================================================
 
+export interface getAllPodcastQuery_getAllPodcasts_podcasts_episodes {
+  __typename: "Episode";
+  id: number;
+  title: string;
+  createdAt: any;
+}
+
 export interface getAllPodcastQuery_getAllPodcasts_podcasts {
   __typename: "Podcast";
   id: number;
   title: string;
   category: string;
-  thumbnailUrl: string | null;
-  description: string | null;
-  rating: number;
+  rating: number | null;
+  createdAt: any;
+  episodes: getAllPodcastQuery_getAllPodcasts_podcasts_episodes[] | null;
 }
 
 export interface getAllPodcastQuery_getAllPodcasts {

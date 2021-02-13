@@ -42,7 +42,7 @@
     "apollo:codegen": "rimraf src/__type_graphql__ && apollo client:codegen src/__type_graphql__ --target=typescript --outputFlat",
     "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
     "build": "react-scripts build",
-    "prebuild":"npm run tailwind:build",
+    "prebuild": "npm run tailwind:build",
     "test": "react-scripts test --env=jsdom --verbose",
     "eject": "react-scripts eject",
     "test:coverage": "npm test -- --coverage --watchAll=false"

@@ -1,28 +1,35 @@
 import { isLoggedInVar } from "../apollo"
 import { LS_TOKEN } from "../constants"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { Podcasts } from "../pages/listener/podcasts"
+import { Mainpage } from "../pages/listener/main"
 import { NotFound } from "../404"
 import { Header } from "../components/header"
 import { useMe } from "../hooks/useMe"
 import { Episodes } from "../pages/listener/episodes"
 import { CreatePodcast } from "../pages/host/create-podcast"
+import { Podcast } from "../pages/podcast"
 
 const ListenerRoutes = [
   <Route key={1} path="/" exact>
-    <Podcasts />
+    <Mainpage />
   </Route>,
-  <Route key={2} path="/podcasts/:id">
+  <Route key={2} path="/podcasts/:id/:id">
     <Episodes />
+  </Route>,
+  <Route key={3} path="/podcasts/:id">
+    <Podcast />
   </Route>,
 ]
 
 const HostRoutes = [
   <Route key={1} path="/" exact>
-    <Podcasts />
+    <Mainpage />
   </Route>,
   <Route key={2} path="/create-podcast">
     <CreatePodcast />
+  </Route>,
+  <Route key={3} path="/podcasts/:id">
+    <Podcast />
   </Route>,
 ]
 

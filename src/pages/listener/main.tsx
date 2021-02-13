@@ -25,7 +25,7 @@ const ALLPODCASTS_QUERY = gql`
   }
 `
 
-export const Podcasts = () => {
+export const Mainpage = () => {
   const { data } = useQuery<getAllPodcastQuery>(ALLPODCASTS_QUERY)
   return (
     <div>
@@ -38,7 +38,7 @@ export const Podcasts = () => {
           <Link to={`/podcasts/${podcast.id}`} key={podcast.id} className="relative group">
             <div className="p-8 border-2 border-blue-400 rounded-md h-full">
               <div
-                style={{ backgroundImage: `url(${podcast.thumbnailUrl})` }}
+                // style={{ backgroundImage: `url(${podcast.thumbnailUrl})` }}
                 className="bg-cover w-32 h-32 m-auto rounded-md"
               ></div>
               <h3 className="mt-2 font-medium text-xl border-b text-center pb-2 font-bold text-blue-500">
@@ -51,7 +51,7 @@ export const Podcasts = () => {
                 {podcast.title}
               </h3>
               <span className="overflow-hidden mt-3 overflow-ellipsis break-words truncate-4-lines h-28 border-t pt-3 text-gray-200">
-                {podcast.description}
+                {/* {podcast.description} */}
               </span>
             </div>
           </Link>
