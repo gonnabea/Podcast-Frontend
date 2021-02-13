@@ -21,7 +21,7 @@ const HostRoutes = [
   <Route key={1} path="/" exact>
     <Podcasts />
   </Route>,
-  <Route key={2} path="/podcasts/:id">
+  <Route key={2} path="/create-podcast">
     <CreatePodcast />
   </Route>,
 ]

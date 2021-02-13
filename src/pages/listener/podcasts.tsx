@@ -12,8 +12,14 @@ const ALLPODCASTS_QUERY = gql`
       podcasts {
         id
         title
+        category
         rating
         createdAt
+        episodes {
+          id
+          title
+          createdAt
+        }
       }
     }
   }

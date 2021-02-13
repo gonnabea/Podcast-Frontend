@@ -1,5 +1,7 @@
 import { gql, useMutation } from "@apollo/client"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { Redirect } from "react-router-dom"
 
 const CREATE_PODCAST_MUTATION = gql`
   mutation CreatePodcastMutation($createPodcastInput: CreatePodcastInput!) {
@@ -26,21 +28,19 @@ export const CreatePodcast = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    console.log(e)
+
     const createPodcastInput = {
       title: e.target.children[0].value,
       category: e.target.children[1].value,
     }
-    console.log(createPodcastInput)
+
     addPodcast({
       variables: {
-        createPodcastInput: {
-          title: e.target.children[0].value,
-          category: e.target.children[1].value,
-        },
+        createPodcastInput,
       },
     })
-    console.log(data)
+
+    window.location.href = "/"
   }
 
   return (
@@ -54,7 +54,11 @@ export const CreatePodcast = () => {
         >
           <input className="w-9/12 mb-3 p-3" type="text" placeholder="Podcast Title"></input>
           <input className="w-9/12 mb-3  p-3" type="text" placeholder="Category"></input>
-          <input type="submit" value="Create" />
+          <input
+            className="rounded-3xl w-20 hover:bg-blue-400 cursor-pointer"
+            type="submit"
+            value="Create"
+          />
         </form>
       </section>
     </main>
