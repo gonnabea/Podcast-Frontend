@@ -6,7 +6,7 @@ import { NotFound } from "../404"
 import { Header } from "../components/header"
 import { useMe } from "../hooks/useMe"
 import { Episodes } from "../pages/listener/episodes"
-import { CreatePodcast } from "../pages/listener/create-podcast"
+import { CreatePodcast } from "../pages/host/create-podcast"
 
 const ListenerRoutes = [
   <Route key={1} path="/" exact>
@@ -18,7 +18,10 @@ const ListenerRoutes = [
 ]
 
 const HostRoutes = [
-  <Route key={2} path="/create-podcast">
+  <Route key={1} path="/" exact>
+    <Podcasts />
+  </Route>,
+  <Route key={2} path="/podcasts/:id">
     <CreatePodcast />
   </Route>,
 ]

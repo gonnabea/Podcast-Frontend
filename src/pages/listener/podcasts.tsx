@@ -10,18 +10,20 @@ const ALLPODCASTS_QUERY = gql`
       ok
       error
       podcasts {
-        ...PodcastParts
+        id
+        title
+        rating
+        createdAt
       }
     }
   }
-  ${PODCAST_FRAGMENT}
 `
 
 export const Podcasts = () => {
   const { data } = useQuery<getAllPodcastQuery>(ALLPODCASTS_QUERY)
-
   return (
     <div>
+      {console.log(data)}
       <Helmet>
         <title>Home | Nuber-podcasts</title>
       </Helmet>
