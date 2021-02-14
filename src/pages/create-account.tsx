@@ -1,14 +1,14 @@
-import { gql, useMutation } from "@apollo/client";
-import { Helmet } from "react-helmet";
-import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
-import { Button } from "../components/button";
-import { FormError } from "../components/form-error";
+import { gql, useMutation } from "@apollo/client"
+import { Helmet } from "react-helmet"
+import { useForm } from "react-hook-form"
+import { Link, useHistory } from "react-router-dom"
+import { Button } from "../components/button"
+import { FormError } from "../components/form-error"
 import {
   CreateAccountMutation,
-  CreateAccountMutationVariables
-} from "../__type_graphql__/CreateAccountMutation";
-import { UserRole } from "../__type_graphql__/globalTypes";
+  CreateAccountMutationVariables,
+} from "../__type_graphql__/CreateAccountMutation"
+import { UserRole } from "../__type_graphql__/globalTypes"
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation CreateAccountMutation($createAccountInput: CreateAccountInput!) {
@@ -17,8 +17,8 @@ const CREATE_ACCOUNT_MUTATION = gql`
       error
     }
   }
-`;
-
+`
+// prettier-ignore
 interface ICreateAccountFrom {
   email: string;
   password: string;
@@ -27,54 +27,44 @@ interface ICreateAccountFrom {
 }
 
 export const CreateAccount = () => {
-  const { register, handleSubmit, errors, getValues, formState } = useForm<
-    ICreateAccountFrom
-  >({
+  const { register, handleSubmit, errors, getValues, formState } = useForm<ICreateAccountFrom>({
     mode: "onBlur",
     defaultValues: {
-      role: UserRole.Host
-    }
-  });
-  const history = useHistory();
+      role: UserRole.Host,
+    },
+  })
+  const history = useHistory()
   const onCompleted = (data: CreateAccountMutation) => {
     const {
-      createAccount: { ok }
-    } = data;
+      createAccount: { ok },
+    } = data
 
     if (ok) {
-      alert("Account Created! Log in now!");
-      history.push("/");
+      alert("Account Created! Log in now!")
+      history.push("/")
     }
-  };
-  const { email, password, role } = getValues();
-  const [
-    createAccountMutation,
-    { data: createAccountResult, loading }
-  ] = useMutation<CreateAccountMutation, CreateAccountMutationVariables>(
-    CREATE_ACCOUNT_MUTATION,
-    {
-      variables: {
-        createAccountInput: { email, password, role }
-      },
-      onCompleted
-    }
-  );
+  }
+  const { email, password, role } = getValues()
+  const [createAccountMutation, { data: createAccountResult, loading }] = useMutation<
+    CreateAccountMutation,
+    CreateAccountMutationVariables
+  >(CREATE_ACCOUNT_MUTATION, {
+    variables: {
+      createAccountInput: { email, password, role },
+    },
+    onCompleted,
+  })
   const _submit = () => {
-    if (!loading) createAccountMutation();
-  };
+    if (!loading) createAccountMutation()
+  }
   return (
     <div className="h-screen flex justify-center items-center bg-gray-50">
       <Helmet>
         <title>Create Account | Nuber-podcasts</title>
       </Helmet>
       <div className="bg-white shadow-2xl rounded-lg w-full max-w-lg mx-5 py-10">
-        <h3 className="text-blue-400 text-3xl text-center mb-10 font-medium">
-          Create Account
-        </h3>
-        <form
-          onSubmit={handleSubmit(_submit)}
-          className="w-full flex flex-col px-6"
-        >
+        <h3 className="text-blue-400 text-3xl text-center mb-10 font-medium">Create Account</h3>
+        <form onSubmit={handleSubmit(_submit)} className="w-full flex flex-col px-6">
           <div className="mb-2 flex align-center text-blue-400">
             <svg
               className="w-5"
@@ -96,21 +86,19 @@ export const CreateAccount = () => {
             ref={register({
               required: {
                 value: true,
-                message: "Email is required!"
+                message: "Email is required!",
               },
               pattern: {
                 value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Email address invalid"
-              }
+                message: "Email address invalid",
+              },
             })}
             className="border-b-2 border-blue-400 py-2 bg-transparent focus:outline-none w-full"
             name="email"
             type="email"
             placeholder="E-mail"
           ></input>
-          {errors.email?.message && (
-            <FormError errorMessage={errors.email.message} />
-          )}
+          {errors.email?.message && <FormError errorMessage={errors.email.message} />}
 
           <div className="mt-8 mb-2 flex align-center text-blue-400">
             <svg
@@ -133,12 +121,12 @@ export const CreateAccount = () => {
             ref={register({
               required: {
                 value: true,
-                message: "Password is required!"
+                message: "Password is required!",
               },
               minLength: {
                 value: 10,
-                message: "Password must be more than 10 characters"
-              }
+                message: "Password must be more than 10 characters",
+              },
             })}
             className="border-b-2 border-blue-400 py-2 bg-transparent focus:outline-none w-full"
             name="password"
@@ -148,19 +136,15 @@ export const CreateAccount = () => {
           <input
             ref={register({
               required: "Password is required!",
-              validate: (value) => value === getValues().password
+              validate: (value) => value === getValues().password,
             })}
             className="mt-4 border-b-2 border-blue-400 py-2 bg-transparent focus:outline-none w-full"
             name="confirm_password"
             type="password"
             placeholder="Confirm"
           ></input>
-          {errors.password?.message && (
-            <FormError errorMessage={errors.password.message} />
-          )}
-          {errors.confirm_password && (
-            <FormError errorMessage="Password not matched" />
-          )}
+          {errors.password?.message && <FormError errorMessage={errors.password.message} />}
+          {errors.confirm_password && <FormError errorMessage="Password not matched" />}
 
           <div className="mt-8 mb-2 flex align-center text-blue-400">
             <svg
@@ -208,5 +192,5 @@ export const CreateAccount = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

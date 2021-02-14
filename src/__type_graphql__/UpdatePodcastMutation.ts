@@ -6,19 +6,19 @@
 import { UpdatePodcastInput } from "./globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: EditPodcastMutation
+// GraphQL mutation operation: UpdatePodcastMutation
 // ====================================================
 
-export interface EditPodcastMutation_updatePodcast {
+export interface UpdatePodcastMutation_updatePodcast {
   __typename: "CoreOutput";
   ok: boolean;
   error: string | null;
 }
 
-export interface EditPodcastMutation {
-  updatePodcast: EditPodcastMutation_updatePodcast;
+export interface UpdatePodcastMutation {
+  updatePodcast: UpdatePodcastMutation_updatePodcast;
 }
 
-export interface EditPodcastMutationVariables {
+export interface UpdatePodcastMutationVariables {
   updatePodcastInput: UpdatePodcastInput;
 }

@@ -1,15 +1,12 @@
-import { gql, useMutation } from "@apollo/client";
-import { Helmet } from "react-helmet";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { authTokenVar, isLoggedInVar } from "../apollo";
-import { Button } from "../components/button";
-import { FormError } from "../components/form-error";
-import { LS_TOKEN } from "../constants";
-import {
-  LoginMutation,
-  LoginMutationVariables
-} from "../__type_graphql__/LoginMutation";
+import { gql, useMutation } from "@apollo/client"
+import { Helmet } from "react-helmet"
+import { useForm } from "react-hook-form"
+import { Link } from "react-router-dom"
+import { authTokenVar, isLoggedInVar } from "../apollo"
+import { Button } from "../components/button"
+import { FormError } from "../components/form-error"
+import { LS_TOKEN } from "../constants"
+import { LoginMutation, LoginMutationVariables } from "../__type_graphql__/LoginMutation"
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($loginInput: LoginInput!) {
@@ -19,45 +16,43 @@ const LOGIN_MUTATION = gql`
       token
     }
   }
-`;
-
+`
+// prettier-ignore
 interface ILoginForm {
   email: string;
   password: string;
 }
 
 export const Login = () => {
-  const { register, getValues, errors, handleSubmit, formState } = useForm<
-    ILoginForm
-  >({
-    mode: "onChange"
-  });
+  const { register, getValues, errors, handleSubmit, formState } = useForm<ILoginForm>({
+    mode: "onChange",
+  })
 
   const onCompleted = (data: LoginMutation) => {
     const {
-      login: { ok, token }
-    } = data;
+      login: { ok, token },
+    } = data
 
     if (ok && token) {
-      localStorage.setItem(LS_TOKEN, token);
-      authTokenVar(token);
-      isLoggedInVar(true);
+      localStorage.setItem(LS_TOKEN, token)
+      authTokenVar(token)
+      isLoggedInVar(true)
     }
-  };
+  }
   const variables = {
-    loginInput: getValues()
-  };
+    loginInput: getValues(),
+  }
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     LoginMutation,
     LoginMutationVariables
   >(LOGIN_MUTATION, {
     variables,
-    onCompleted
-  });
+    onCompleted,
+  })
 
   const _submit = () => {
-    if (!loading) loginMutation();
-  };
+    if (!loading) loginMutation()
+  }
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-50">
@@ -78,13 +73,8 @@ export const Login = () => {
         <div className="w-full sm:w-5/12 py-16">
           {" "}
           {/*Left Side*/}
-          <h3 className="text-blue-400 text-3xl text-center mb-10 font-medium">
-            Nuber-Podcasts
-          </h3>
-          <form
-            onSubmit={handleSubmit(_submit)}
-            className="w-full flex flex-col px-14"
-          >
+          <h3 className="text-blue-400 text-3xl text-center mb-10 font-medium">Nuber-Podcasts</h3>
+          <form onSubmit={handleSubmit(_submit)} className="w-full flex flex-col px-14">
             <div className="border-b-2 border-blue-400 py-2 bg-transparent flex">
               <svg
                 className="w-6"
@@ -102,7 +92,7 @@ export const Login = () => {
               </svg>
               <input
                 ref={register({
-                  required: "Email is required!"
+                  required: "Email is required!",
                 })}
                 className="focus:outline-none pl-2 w-full"
                 name="email"
@@ -110,9 +100,7 @@ export const Login = () => {
                 placeholder="E-mail"
               ></input>
             </div>
-            {errors.email?.message && (
-              <FormError errorMessage={errors.email.message} />
-            )}
+            {errors.email?.message && <FormError errorMessage={errors.email.message} />}
             <div className="mt-8 border-b-2 border-blue-400 py-2 bg-transparent flex">
               <svg
                 className="w-6"
@@ -131,7 +119,7 @@ export const Login = () => {
               <input
                 ref={register({
                   required: "Password is required!",
-                  minLength: 10
+                  minLength: 10,
                 })}
                 className="focus:outline-none pl-2 w-full"
                 name="password"
@@ -139,9 +127,7 @@ export const Login = () => {
                 placeholder="Password"
               ></input>
             </div>
-            {errors.password?.message && (
-              <FormError errorMessage={errors.password.message} />
-            )}
+            {errors.password?.message && <FormError errorMessage={errors.password.message} />}
             {errors.password?.type === "minLength" && (
               <FormError errorMessage="Password must be more than 10 characters" />
             )}
@@ -159,10 +145,7 @@ export const Login = () => {
               Don't have an account?
               <br />
               Create{" "}
-              <Link
-                to="/create-account"
-                className="text-blue-400 hover:underline"
-              >
+              <Link to="/create-account" className="text-blue-400 hover:underline">
                 here!
               </Link>
             </span>
@@ -170,5 +153,5 @@ export const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

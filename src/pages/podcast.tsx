@@ -2,9 +2,7 @@ import { gql, useMutation, useQuery } from "@apollo/client"
 import { useRef, useState } from "react"
 import { withRouter } from "react-router-dom"
 import { useMe } from "../hooks/useMe"
-import { PodcastSearchInput } from "../__type_graphql__/globalTypes"
 import { PodcastQuery } from "../__type_graphql__/PodcastQuery"
-import { EditPodcastMutation } from "../__type_graphql__/EditPodcastMutation"
 
 const GET_PODCAST_DETAIL = gql`
   query PodcastQuery($podcastSearchInput: PodcastSearchInput!) {
@@ -30,8 +28,8 @@ const GET_PODCAST_DETAIL = gql`
   }
 `
 
-const MUTATION_EDIT_PODCAST = gql`
-  mutation EditPodcastMutation($updatePodcastInput: UpdatePodcastInput!) {
+const EDIT_PODCAST_MUTATION = gql`
+  mutation UpdatePodcastMutation($updatePodcastInput: UpdatePodcastInput!) {
     updatePodcast(input: $updatePodcastInput) {
       ok
       error
@@ -51,17 +49,8 @@ const Podcast = ({ match }: any) => {
       podcastSearchInput,
     },
   }) // 특정 팟캐스트 쿼리
-  const [updatePodcast] = useMutation<EditPodcastMutation>(MUTATION_EDIT_PODCAST, {
-    variables: {
-      updatePodcastInput: {
-        title: "String",
-        category: "String",
-      },
-    },
-  }) // 팟캐스트 업데이트 뮤테이션
 
-  const [editModal, setEditModal] = useState(false)
-  const modalArea = useRef<any>()
+  const [updatePodcast, { data: updatePodcastOutput }] = useMutation(EDIT_PODCAST_MUTATION) // 팟캐스트 업데이트 뮤테이션
 
   // 모달 토글 로직
   const handleEditModal = (editModal: boolean) => {
@@ -75,6 +64,27 @@ const Podcast = ({ match }: any) => {
       setEditModal(true)
     }
   }
+
+  const handleEditSubmit = async (e: any) => {
+    e.preventDefault()
+
+    const title = e.target.children[0].value
+    const category = e.target.children[1].value
+    const updatePodcastInput = {
+      id: parseInt(match.params.id),
+      payload: {
+        title: title ? title : data?.getPodcast?.podcast?.title, // 입력 값이 없을 시 원래의 값 변경 x 위함.
+        category: category ? category : data?.getPodcast?.podcast?.title,
+      },
+    }
+    console.log(updatePodcastInput)
+    await updatePodcast({ variables: { updatePodcastInput } })
+
+    location.reload()
+  }
+
+  const [editModal, setEditModal] = useState(false)
+  const modalArea = useRef<any>()
 
   return (
     <main>
@@ -104,7 +114,7 @@ const Podcast = ({ match }: any) => {
             }
           })}
 
-          <form ref={modalArea} className="hidden">
+          <form ref={modalArea} onSubmit={handleEditSubmit} className="hidden">
             <input type="text" placeholder="Edit Title" />
             <input type="text" placeholder="Edit Category" />
             <input type="submit" value="EDIT" />
