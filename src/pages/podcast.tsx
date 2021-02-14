@@ -37,9 +37,22 @@ const EDIT_PODCAST_MUTATION = gql`
   }
 `
 
-const handleLike = () => {}
-
 const Podcast = ({ match }: any) => {
+  const handleLike = async () => {
+    const currentLikes = data?.getPodcast?.podcast?.rating
+
+    const updatePodcastInput = {
+      id: parseInt(match.params.id),
+      payload: {
+        rating: currentLikes ? currentLikes + 1 : 1,
+      },
+    }
+
+    await updatePodcast({ variables: { updatePodcastInput } })
+
+    location.reload()
+  }
+
   const podcastSearchInput = {
     id: parseInt(match.params.id),
   }
@@ -90,13 +103,16 @@ const Podcast = ({ match }: any) => {
     <main>
       {console.log(data)}
       <header>
-        <h1 className="font-bold w-full flex justify-center text-3xl font-serif">
+        <h1 className="font-bold w-full flex justify-center text-5xl font-serif">
           {data?.getPodcast?.podcast?.title}
         </h1>
-        <div className="flex flex-col w-full justify-center items-center border-dashed border-4 border-green-500 p-10 bg-blue-100">
+        <span className="font-light w-full flex justify-center">
+          {data?.getPodcast?.podcast?.category}
+        </span>
+        <div className="flex flex-col w-full justify-around items-center border-dashed border-4 border-green-500 p-10 bg-blue-100">
           <span className="font-light">UPLOADER: {data?.getPodcast?.podcast?.creator.email}</span>
           <span className="font-light">{data?.getPodcast?.podcast?.createdAt.slice(0, 10)}</span>
-          <span className="text-green-400 font-bold">{data?.getPodcast?.podcast?.rating}</span>
+          <span className="text-green-400 font-bold">{data?.getPodcast?.podcast?.rating} Like</span>
           <button onClick={handleLike}>💗 I Like It!</button>
 
           {/* 팟캐스트 수정 토글 버튼 */}
@@ -107,6 +123,7 @@ const Podcast = ({ match }: any) => {
                   onClick={() => {
                     handleEditModal(editModal)
                   }}
+                  className="font-bold text-black border-2 border-green-400 bg-white p-2 mb-2 hover:bg-green-400 hover:text-white "
                 >
                   Edit Podcast
                 </button>
@@ -124,7 +141,7 @@ const Podcast = ({ match }: any) => {
       <section>
         {data?.getPodcast?.podcast?.episodes?.map((episode: any) => {
           return (
-            <div className=" w-1/4 flex flex-col justify-center items-center border-double border-4 border-blue-500 hover:bg-blue-200 cursor-pointer">
+            <div className="w-1/4 h-full flex flex-col justify-around items-center border-double border-4 border-blue-500 hover:bg-blue-200 cursor-pointer">
               <span>{episode.title}</span>
               <span>{episode.category}</span>
               <span>{episode.createdAt.slice(0, 10)}</span>

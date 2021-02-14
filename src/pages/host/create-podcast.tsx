@@ -16,7 +16,7 @@ const CREATE_PODCAST_MUTATION = gql`
 export const CreatePodcast = () => {
   const [addPodcast, { data }] = useMutation(CREATE_PODCAST_MUTATION)
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
 
     const createPodcastInput = {
@@ -24,7 +24,7 @@ export const CreatePodcast = () => {
       category: e.target.children[1].value,
     }
 
-    addPodcast({
+    await addPodcast({
       variables: {
         createPodcastInput,
       },
