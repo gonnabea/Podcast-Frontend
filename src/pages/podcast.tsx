@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client"
+import { withRouter } from "react-router-dom"
 import { PodcastSearchInput } from "../__type_graphql__/globalTypes"
 import { PodcastQuery } from "../__type_graphql__/PodcastQuery"
 
@@ -26,9 +27,9 @@ const GET_PODCAST_DETAIL = gql`
   }
 `
 
-export const Podcast = () => {
+const Podcast = ({ match }: any) => {
   const podcastSearchInput = {
-    id: 1,
+    id: parseInt(match.params.id),
   }
   const { data } = useQuery<PodcastQuery>(GET_PODCAST_DETAIL, {
     variables: {
@@ -64,3 +65,5 @@ export const Podcast = () => {
     </main>
   )
 }
+
+export default withRouter(Podcast)

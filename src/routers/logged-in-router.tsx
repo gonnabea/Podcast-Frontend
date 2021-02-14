@@ -7,7 +7,7 @@ import { Header } from "../components/header"
 import { useMe } from "../hooks/useMe"
 import { Episodes } from "../pages/listener/episodes"
 import { CreatePodcast } from "../pages/host/create-podcast"
-import { Podcast } from "../pages/podcast"
+import Podcast from "../pages/podcast"
 
 const ListenerRoutes = [
   <Route key={1} path="/" exact>
