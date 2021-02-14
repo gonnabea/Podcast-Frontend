@@ -9,6 +9,11 @@ import { PodcastSearchInput } from "./globalTypes";
 // GraphQL query operation: PodcastQuery
 // ====================================================
 
+export interface PodcastQuery_getPodcast_podcast_creator {
+  __typename: "User";
+  id: number;
+}
+
 export interface PodcastQuery_getPodcast_podcast_episodes {
   __typename: "Episode";
   title: string;
@@ -20,6 +25,7 @@ export interface PodcastQuery_getPodcast_podcast {
   title: string;
   category: string;
   rating: number | null;
+  creator: PodcastQuery_getPodcast_podcast_creator;
   episodes: PodcastQuery_getPodcast_podcast_episodes[] | null;
 }
 

@@ -10,6 +10,9 @@ const GET_PODCAST_DETAIL = gql`
         title
         category
         rating
+        creator {
+          id
+        }
         episodes {
           title
           category
