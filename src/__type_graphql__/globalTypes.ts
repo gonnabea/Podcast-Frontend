@@ -32,6 +32,17 @@ export interface PodcastSearchInput {
   id: number;
 }
 
+export interface UpdatePodcastInput {
+  id: number;
+  payload: UpdatePodcastPayload;
+}
+
+export interface UpdatePodcastPayload {
+  title?: string | null;
+  category?: string | null;
+  rating?: number | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
