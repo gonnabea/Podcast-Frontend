@@ -12,11 +12,13 @@ import { PodcastSearchInput } from "./globalTypes";
 export interface PodcastQuery_getPodcast_podcast_creator {
   __typename: "User";
   id: number;
+  email: string;
 }
 
 export interface PodcastQuery_getPodcast_podcast_episodes {
   __typename: "Episode";
   title: string;
+  createdAt: any;
   category: string;
 }
 
@@ -25,6 +27,7 @@ export interface PodcastQuery_getPodcast_podcast {
   title: string;
   category: string;
   rating: number | null;
+  createdAt: any;
   creator: PodcastQuery_getPodcast_podcast_creator;
   episodes: PodcastQuery_getPodcast_podcast_episodes[] | null;
 }
