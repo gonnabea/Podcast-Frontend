@@ -17,6 +17,7 @@ export interface PodcastQuery_getPodcast_podcast_creator {
 
 export interface PodcastQuery_getPodcast_podcast_episodes {
   __typename: "Episode";
+  id: number;
   title: string;
   createdAt: any;
   category: string;

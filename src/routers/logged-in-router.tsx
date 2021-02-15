@@ -28,8 +28,11 @@ const HostRoutes = [
   <Route key={2} path="/create-podcast">
     <CreatePodcast />
   </Route>,
-  <Route key={3} path="/podcasts/:id">
+  <Route exact key={3} path="/podcasts/:id">
     <Podcast />
+  </Route>,
+  <Route key={2} path="/podcasts/:id/:id">
+    <Episodes />
   </Route>,
 ]
 

@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client"
 import { useRef, useState } from "react"
-import { withRouter } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import { useMe } from "../hooks/useMe"
 import { PodcastQuery } from "../__type_graphql__/PodcastQuery"
 
@@ -19,6 +19,7 @@ const GET_PODCAST_DETAIL = gql`
           email
         }
         episodes {
+          id
           title
           createdAt
           category
@@ -164,11 +165,14 @@ const Podcast = ({ match }: any) => {
       <section>
         {data?.getPodcast?.podcast?.episodes?.map((episode: any) => {
           return (
-            <div className="w-1/4 h-full flex flex-col justify-around items-center border-double border-4 border-blue-500 hover:bg-blue-200 cursor-pointer">
+            <Link
+              to={`/podcasts/${+match.params.id}/${episode?.id}`}
+              className="w-1/4 h-full flex flex-col justify-around items-center border-double border-4 border-blue-500 hover:bg-blue-200 cursor-pointer"
+            >
               <span>{episode.title}</span>
               <span>{episode.category}</span>
               <span>{episode.createdAt.slice(0, 10)}</span>
-            </div>
+            </Link>
           )
         })}
       </section>
