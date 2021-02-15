@@ -37,6 +37,15 @@ const EDIT_PODCAST_MUTATION = gql`
   }
 `
 
+const DELETE_PODCAST_MUTATION = gql`
+  mutation DeletePodcastMutation($podcastSearchInput: PodcastSearchInput!) {
+    deletePodcast(input: $podcastSearchInput) {
+      ok
+      error
+    }
+  }
+`
+
 const Podcast = ({ match }: any) => {
   const handleLike = async () => {
     const currentLikes = data?.getPodcast?.podcast?.rating
@@ -64,6 +73,7 @@ const Podcast = ({ match }: any) => {
   }) // 특정 팟캐스트 쿼리
 
   const [updatePodcast, { data: updatePodcastOutput }] = useMutation(EDIT_PODCAST_MUTATION) // 팟캐스트 업데이트 뮤테이션
+  const [deletePodcast] = useMutation(DELETE_PODCAST_MUTATION)
 
   // 모달 토글 로직
   const handleEditModal = (editModal: boolean) => {
@@ -96,6 +106,15 @@ const Podcast = ({ match }: any) => {
     location.reload()
   }
 
+  const handleDelete = async () => {
+    const podcastSearchInput = {
+      id: parseInt(match.params.id),
+    }
+    await deletePodcast({ variables: { podcastSearchInput } })
+
+    window.location.href = "/"
+  }
+
   const [editModal, setEditModal] = useState(false)
   const modalArea = useRef<any>()
 
@@ -109,6 +128,7 @@ const Podcast = ({ match }: any) => {
         <span className="font-light w-full flex justify-center">
           {data?.getPodcast?.podcast?.category}
         </span>
+
         <div className="flex flex-col w-full justify-around items-center border-dashed border-4 border-green-500 p-10 bg-blue-100">
           <span className="font-light">UPLOADER: {data?.getPodcast?.podcast?.creator.email}</span>
           <span className="font-light">{data?.getPodcast?.podcast?.createdAt.slice(0, 10)}</span>
@@ -134,7 +154,10 @@ const Podcast = ({ match }: any) => {
           <form ref={modalArea} onSubmit={handleEditSubmit} className="hidden">
             <input type="text" placeholder="Edit Title" />
             <input type="text" placeholder="Edit Category" />
-            <input type="submit" value="EDIT" />
+            <input className="mb-10" type="submit" value="EDIT" />
+            <button className="flex justify-center w-full" onClick={handleDelete}>
+              🗑 Delete
+            </button>
           </form>
         </div>
       </header>
